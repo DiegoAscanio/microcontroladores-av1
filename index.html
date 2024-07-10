@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Atividade Avaliativa 1 de Microcontroladores</title>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #b4b4b4;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+        <script>
+            async function baixarProva() {
+                df = await dfd.readCSV('alunos.csv');
+                matriculas = df.$getColumnData('Matrícula').$data;
+                matricula = parseInt(document.getElementById('matricula').value);
+                if (!matriculas.includes(matricula)) {
+                    alert('Matrícula não encontrada!');
+                    return;
+                }
+                nomes = df.$getColumnData('Nome').$data;
+                arquivos = nomes.map(function(v) {
+                    return 'provas/' + v.replaceAll(' ', '-') + '.pdf';
+                });
+                indiceMatricula = matriculas.indexOf(matricula);
+                arquivo = arquivos[indiceMatricula];
+                window.open(arquivo, '_blank');
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Atividade Avaliativa 1 de Microcontroladores</h1>
+        <label for="matricula">Informe sua Matrícula: </label>
+        <input type="text" id="matricula" name="matricula">
+        <button onClick="baixarProva()">Baixar Prova</button>
+    </body>
+</html>
